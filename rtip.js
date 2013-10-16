@@ -3,7 +3,7 @@ var c = canvas[0].getContext("2d");
 
 var images = new Array();
 
-var path = "http://smallbeerpress.com/wp-content/uploads/itunes.png"
+var path = "white_knight.png"
 
 for(var i = 0; i < 10; i++) {
     images[i] = new DragImage(path, Math.floor((Math.random()*400)), Math.floor((Math.random()*400)));
@@ -14,11 +14,9 @@ var loop = setInterval(function() {
     c.fillStyle = "white";
     c.fillRect(0, 0, 512, 512);
 
-    for(var i = 0; i < 8; i++)
-    {
-        for(var j = 0; j < 8; j++)
-        {
-            if((i + j) % 2 == 0)
+    for (var i = 0; i < 8; i++) {
+        for (var j = 0; j < 8; j++) {
+            if ((i + j) % 2 == 0)
                 c.fillStyle="#444444";
             else    
                 c.fillStyle="#AAAAAA";
