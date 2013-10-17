@@ -6,8 +6,15 @@ var images = new Array();
 var path = "white_knight.png"
 
 for(var i = 0; i < 10; i++) {
-    images[i] = new DragImage(path, Math.floor((Math.random()*400)), Math.floor((Math.random()*400)));
+    // images[i] = new DragImage(path, Math.floor((Math.random()*400)), Math.floor((Math.random()*400)));
 }
+
+$.getJSON("chess.json", function (json) {
+    console.log(json);
+    $.each(json.pieces, function (i, fb) {
+        images.push(new DragImage(fb.piece, fb.x, fb.y));
+    });
+});
 
 var loop = setInterval(function() {
 
@@ -17,16 +24,16 @@ var loop = setInterval(function() {
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
             if ((i + j) % 2 == 0)
-                c.fillStyle="#444444";
+                c.fillStyle="#d2b48c";
             else    
-                c.fillStyle="#AAAAAA";
+                c.fillStyle="#a52a2a";
 
             c.fillRect(i * 64, j * 64, 64, 64); 
         }
 
     }
 
-    for(var i = 0; i < 10; i++) {
+    for(var i = 0; i < images.length; i++) {
         images[i].update();
     }
 
