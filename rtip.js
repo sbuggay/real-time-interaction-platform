@@ -12,7 +12,7 @@ for(var i = 0; i < 10; i++) {
 var loop = setInterval(function() {
 
     c.fillStyle = "white";
-    c.fillRect(0, 0, 512, 512);
+    c.fillRect(0, 0, 1024, 512);
 
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
@@ -30,7 +30,7 @@ var loop = setInterval(function() {
         images[i].update();
     }
 
-}, 30);
+}, 15);
 
 var mouseX = 0, mouseY = 0;
 var mousePressed = false;
