@@ -3,18 +3,19 @@ var c = canvas[0].getContext("2d");
 
 var images = new Array();
 
-var path = "white_knight.png"
 
 for(var i = 0; i < 10; i++) {
     // images[i] = new DragImage(path, Math.floor((Math.random()*400)), Math.floor((Math.random()*400)));
 }
 
+function loadJSON() {
 $.getJSON("chess.json", function (json) {
     console.log(json);
     $.each(json.pieces, function (i, fb) {
         images.push(new DragImage(fb.piece, fb.x, fb.y));
     });
 });
+}
 
 var loop = setInterval(function() {
 

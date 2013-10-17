@@ -7,14 +7,15 @@
 
 <body>
 	rip 0.1
-	<select>
+	<select id="subs">
 		<option id="chess">Chess</option>
+		<option id="checkers">Checkers</option>
 	</select>
-	<button>Load</button>
+	<button onclick="loadJSON()">Load</button>
 	<hr>
 	<canvas id="c" width = "1024" height = "512" ></canvas>
 
-	<script type="text/JavaScript" src="http://code.jquery.com/jquery-2.0.3.min.js "></script>
+	<script type="text/JavaScript" src="jquery.js "></script>
 	<script type="text/JavaScript" src="rtip.js"></script>
 </body>
 </script>
