@@ -2,35 +2,45 @@ var canvas = $("#c");
 var c = canvas[0].getContext("2d");
 
 var images = new Array();
+var board;
 
+$.getJSON("chess.json", function(json) {
+    console.log(json); // this will show the info it in firebug console
+    board = new Image();
+    board.src = json.board;
+});
 var path = "white_knight.png"
+
 
 for(var i = 0; i < 10; i++) {
     images[i] = new DragImage(path, Math.floor((Math.random()*400)), Math.floor((Math.random()*400)));
 }
 
+// $("#log").html("Debug: Objects: " + images.length;
+
 var loop = setInterval(function() {
 
     c.fillStyle = "white";
-    c.fillRect(0, 0, 512, 512);
+    c.fillRect(0, 0, c.width, c.height);
 
-    for (var i = 0; i < 8; i++) {
-        for (var j = 0; j < 8; j++) {
-            if ((i + j) % 2 == 0)
-                c.fillStyle="#444444";
-            else    
-                c.fillStyle="#AAAAAA";
+    // for (var i = 0; i < 8; i++) {
+    //     for (var j = 0; j < 8; j++) {
+    //         if ((i + j) % 2 == 0)
+    //             c.fillStyle="#333333";
+    //         else    
+    //             c.fillStyle="#AAAAAA";
 
-            c.fillRect(i * 64, j * 64, 64, 64); 
-        }
+    //         c.fillRect(i * 64, j * 64, 64, 64); 
+    //     }
 
-    }
+    // }
 
+    c.drawImage(board, 0, 0);
     for(var i = 0; i < 10; i++) {
         images[i].update();
     }
 
-}, 30);
+}, 15);
 
 var mouseX = 0, mouseY = 0;
 var mousePressed = false;
@@ -44,6 +54,8 @@ $(document).mousedown(function(){
 }).mouseup(function(){
     mousePressed = false;
 });
+
+
 
 function DragImage(src, x, y) {
     var that = this;
