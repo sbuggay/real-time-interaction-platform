@@ -1,0 +1,11 @@
+{
+    "name": "rip",
+    "version": "0.0.1",
+    "description": "real-time-interaction-platform",
+    "dependencies": {
+        "socket.io": "latest",
+        "express": "latest",
+        "jade": "latest"
+    },
+    "author": "Devan Buggay"
+}
