@@ -1,5 +1,5 @@
 {
-	"game":"chess", 
+	"game":"checkers", 
 	"players":2,
 	"board" : "board.gif",
 	"pieces" : [{

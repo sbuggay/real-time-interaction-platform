@@ -2,12 +2,16 @@ var canvas = $("#c");
 var c = canvas[0].getContext("2d");
 
 var game = null;
+var players = null;
 var images = new Array();
 
 function loadJSON() {
     images = new Array();
+    
     $.getJSON($("#subs").val() + ".json", function (json) {
         console.log(json);
+        game = json.game;
+        players = json.players;
         $.each(json.pieces, function (i, fb) {
             images.push(new DragImage("resources/" + fb.piece, fb.x, fb.y));
         });
@@ -19,6 +23,7 @@ var loop = setInterval(function() {
 
     c.fillStyle = "white";
     c.fillRect(0, 0, 1024, 512);
+    c.font = "24px sans-serif";
 
     for (var i = 0; i < 8; i++) {
         for (var j = 0; j < 8; j++) {
@@ -35,6 +40,9 @@ var loop = setInterval(function() {
     for(var i = 0; i < images.length; i++) {
         images[i].update();
     }
+
+    c.fillStyle = "black";
+    c.fillText(game + "(1/" + players + ")", 512, 24);
 
 }, 15);
 
