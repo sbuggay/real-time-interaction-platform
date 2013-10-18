@@ -3,6 +3,7 @@ var c = canvas[0].getContext("2d");
 
 var game = null;
 var players = null;
+var dragging = false;
 var images = new Array();
 
 function loadJSON() {
@@ -69,6 +70,7 @@ function DragImage(src, x, y) {
     img.src = src;
     this.update = function() {
         if (mousePressed) {
+            if (dragging == false) {
             var left = that.x;
             var right = that.x + img.width;
             var top = that.y;
@@ -79,12 +81,15 @@ function DragImage(src, x, y) {
             }
             if (mouseX < right && mouseX > left && mouseY < bottom && mouseY > top) {
                 drag = true;
+                dragging = true;
             }
-
-        }else{
+}
+        }
+        else {
+            dragging = false;
             drag = false;
         }
-        if (drag){
+        if (drag && dragging){
             that.x = mouseX - startX;
             that.y = mouseY - startY;
         }
