@@ -4,6 +4,7 @@ var c = canvas[0].getContext("2d");
 var game = null;
 var players = null;
 var dragging = false;
+var swapped = false;
 var images = new Array();
 
 function loadJSON() {
@@ -31,7 +32,7 @@ var loop = setInterval(function() {
             if ((i + j) % 2 == 0)
                 c.fillStyle="#d2b48c";
             else    
-                c.fillStyle="#a52a2a";
+                c.fillStyle="#ffffff";
 
             c.fillRect(i * 64, j * 64, 64, 64); 
         }
@@ -39,7 +40,12 @@ var loop = setInterval(function() {
     }
 
     for(var i = 0; i < images.length; i++) {
-        images[i].update();
+        if(images[i].update() == 1) {
+            if(mousePressed == true && swapped == false) {
+                images.move(i, images.length - 1);
+                swapped = true;
+            }
+        }
     }
 
     c.fillStyle = "black";
@@ -58,6 +64,7 @@ $(document).mousedown(function(){
     mousePressed = true;
 }).mouseup(function(){
     mousePressed = false;
+    swapped = false;
 });
 
 function DragImage(src, x, y) {
@@ -71,19 +78,19 @@ function DragImage(src, x, y) {
     this.update = function() {
         if (mousePressed) {
             if (dragging == false) {
-            var left = that.x;
-            var right = that.x + img.width;
-            var top = that.y;
-            var bottom = that.y + img.height;
-            if (!drag){
-                startX = mouseX - that.x;
-                startY = mouseY - that.y;
+                var left = that.x;
+                var right = that.x + img.width;
+                var top = that.y;
+                var bottom = that.y + img.height;
+                if (!drag){
+                    startX = mouseX - that.x;
+                    startY = mouseY - that.y;
+                }
+                if (mouseX < right && mouseX > left && mouseY < bottom && mouseY > top) {
+                    drag = true;
+                    dragging = true;
+                }
             }
-            if (mouseX < right && mouseX > left && mouseY < bottom && mouseY > top) {
-                drag = true;
-                dragging = true;
-            }
-}
         }
         else {
             dragging = false;
@@ -94,5 +101,66 @@ function DragImage(src, x, y) {
             that.y = mouseY - startY;
         }
         c.drawImage(img, that.x, that.y);
+        if(dragging) {
+            return 1;
+        } 
+        else {
+            return 0;
+        }
     }
 }
+
+function Card(src, x, y, flipped) {
+    var that = this;
+    var startX = 0, startY = 0;
+    var drag = false;
+    this.flipped = flipped;
+    this.x = x;
+    this.y = y;
+    var img = new Image();
+    img.src = src;
+    this.update = function() {
+        if (mousePressed) {
+            if (dragging == false) {
+                var left = that.x;
+                var right = that.x + img.width;
+                var top = that.y;
+                var bottom = that.y + img.height;
+                if (!drag){
+                    startX = mouseX - that.x;
+                    startY = mouseY - that.y;
+                }
+                if (mouseX < right && mouseX > left && mouseY < bottom && mouseY > top) {
+                    drag = true;
+                    dragging = true;
+                }
+            }
+        }
+        else {
+            dragging = false;
+            drag = false;
+        }
+        if (drag && dragging){
+            that.x = mouseX - startX;
+            that.y = mouseY - startY;
+        }
+        c.drawImage(img, that.x, that.y);
+        if(dragging) {
+            return 1;
+        } 
+        else {
+            return 0;
+        }
+    }
+}
+
+Array.prototype.move = function (old_index, new_index) {
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        while ((k--) + 1) {
+            this.push(undefined);
+        }
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+    return this; // for testing purposes
+};
